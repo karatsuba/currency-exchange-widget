@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './screens/Home';
+import { Exchange } from './screens/Exchange';
+import { Container } from './components/Container';
+import { Provider } from 'react-redux';
+import { configureStore } from './store';
+import { initialState } from './store/initialState';
 
-function App() {
-    return (
-        <div className='App'>
-            <header className='App-header'>
-                <img src={logo} className='App-logo' alt='logo' />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className='App-link'
-                    href='https://reactjs.org'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
-    );
-}
+const store = configureStore(initialState);
+
+export const App = () => (
+    <Provider store={store}>
+        <Router>
+            <Container>
+                <Switch>
+                    <Route path='/exchange'>
+                        <Exchange />
+                    </Route>
+                    <Route path='/'>
+                        <Home />
+                    </Route>
+                </Switch>
+            </Container>
+        </Router>
+    </Provider>
+);
 
 export default App;
