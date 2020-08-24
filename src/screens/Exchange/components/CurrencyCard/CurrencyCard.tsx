@@ -6,12 +6,12 @@ import { CurrencyCardContainer } from './style';
 interface CurrencyCardProps {
     id: string;
     symbol: string;
-    label: string;
+    fromCurrency: string;
+    toCurrency: string;
     balance: number;
     sign: string;
     inputValue: string;
-    inputCurrency: string;
-    onInputChange: (value: string, currency: string) => void;
+    onInputChange: (value: string, fromCurrency: string, toCurrency: string) => void;
 }
 
 export const CurrencyCard: React.FC<CurrencyCardProps> = React.memo((props) => {
@@ -19,12 +19,16 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = React.memo((props) => {
 
     return (
         <CurrencyCardContainer>
-            <CurrencyInfo balance={props.balance} symbol={props.symbol} label={props.label} />
+            <CurrencyInfo
+                balance={props.balance}
+                symbol={props.symbol}
+                currency={props.fromCurrency}
+            />
             <CurrencyInput
                 value={props.inputValue}
-                label={props.label}
+                fromCurrency={props.fromCurrency}
                 sign={props.sign}
-                inputCurrency={props.inputCurrency}
+                toCurrency={props.toCurrency}
                 onInputChange={props.onInputChange}
             />
         </CurrencyCardContainer>

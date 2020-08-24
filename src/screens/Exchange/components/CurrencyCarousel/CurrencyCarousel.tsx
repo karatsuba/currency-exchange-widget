@@ -12,21 +12,24 @@ interface CurrencyCarouselProps {
     initialPocket: number;
     sign: string;
     inputValue: string;
-    inputCurrency: string;
+    toCurrency: string;
     onSlideChange: (currency: string) => void;
-    onInputChange: (value: string, currency: string) => void;
+    onInputChange: (value: string, fromCurrency: string, toCurrency: string) => void;
 }
 
 export const CurrencyCarousel: React.FC<CurrencyCarouselProps> = React.memo((props) => {
     const renderCurrencyCards = (pockets: Pockets) => {
         return Object.entries(pockets).map(([id, pocket]) => {
+            const { currency, ...rest } = pocket;
+
             return (
                 <CurrencyCard
                     key={id}
-                    {...pocket}
+                    {...rest}
                     sign={props.sign}
                     inputValue={props.inputValue}
-                    inputCurrency={props.inputCurrency}
+                    fromCurrency={currency}
+                    toCurrency={props.toCurrency}
                     onInputChange={props.onInputChange}
                 />
             );
@@ -35,7 +38,7 @@ export const CurrencyCarousel: React.FC<CurrencyCarouselProps> = React.memo((pro
 
     const handleSlideChange = (oldIndex: number, newIndex: number) => {
         const pocket = props.pockets[newIndex];
-        props.onSlideChange(pocket.label);
+        props.onSlideChange(pocket.currency);
     };
 
     console.log('Render CurrencyCarousel');

@@ -5,11 +5,17 @@ export enum TYPES {
     SLIDE_CHANGE = 'SLIDE_CHANGE'
 }
 
-export const inputChange = (value: string, currency: string, flow: ExchangeFlow) => ({
+export const inputChange = (
+    value: string,
+    fromCurrency: string,
+    toCurrency: string,
+    flow: ExchangeFlow
+) => ({
     type: TYPES.INPUT_CHANGE as typeof TYPES.INPUT_CHANGE,
     payload: {
         value,
-        currency,
+        fromCurrency,
+        toCurrency,
         flow
     }
 });

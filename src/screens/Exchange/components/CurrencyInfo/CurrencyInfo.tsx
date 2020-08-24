@@ -2,16 +2,16 @@ import React from 'react';
 import { CurrencyInfoContainer, CurrencyInfoBody, CurrencyInfoFooter } from './style';
 
 interface CurrencyInfoProps {
-    label: string;
+    currency: string;
     symbol: string;
     balance: number;
 }
 
 export const CurrencyInfo: React.FC<CurrencyInfoProps> = React.memo(
-    ({ label, symbol, balance }) => {
+    ({ currency, symbol, balance }) => {
         return (
             <CurrencyInfoContainer>
-                <CurrencyInfoBody>{label}</CurrencyInfoBody>
+                <CurrencyInfoBody>{currency}</CurrencyInfoBody>
                 <CurrencyInfoFooter>{`You have ${symbol}${balance}`}</CurrencyInfoFooter>
             </CurrencyInfoContainer>
         );

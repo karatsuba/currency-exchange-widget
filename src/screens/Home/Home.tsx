@@ -13,7 +13,7 @@ export const Home: React.FC<HomeProps> = (props) => {
     const pockets = Object.entries(props.pockets).map(([id, pocket]) => {
         return (
             <div key={pocket.id}>
-                {pocket.label}
+                {pocket.currency}
                 {pocket.balance}
             </div>
         );

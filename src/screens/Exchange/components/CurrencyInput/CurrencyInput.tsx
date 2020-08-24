@@ -3,10 +3,10 @@ import { CurrencyInputContainer, Input } from './style';
 
 interface CurrencyInputProps {
     value: string;
-    label: string;
+    fromCurrency: string;
     sign: string;
-    inputCurrency: string;
-    onInputChange: (value: string, currency: string) => void;
+    toCurrency: string;
+    onInputChange: (value: string, fromCurrency: string, toCurrency: string) => void;
 }
 
 function valueWithoutSign(value: string) {
@@ -24,7 +24,8 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = React.memo((props) =>
     const inputElement = useRef<HTMLInputElement>(null);
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        const regex = /^[0-9]+(\.([0-9]{1,2})?)?$/;
+        // const regex = /^[0-9]+(\.([0-9]{1,2})?)?$/;   --- allow 000.00
+        const regex = /^(0|[1-9]\d*)(\.([0-9]{1,2})?)?$/;
         const nextValue = valueWithoutSign(inputElement.current?.value!) + event.key;
         if (!regex.test(nextValue)) {
             event.preventDefault();
@@ -33,9 +34,7 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = React.memo((props) =>
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const nextValue = valueWithoutSign(event.target.value);
-        if (nextValue !== props.value) {
-            props.onInputChange(nextValue, props.label);
-        }
+        props.onInputChange(nextValue, props.fromCurrency, props.toCurrency);
     };
 
     console.log('Render CurrencyInput');

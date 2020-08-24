@@ -6,17 +6,17 @@ import { ExchangeFlow } from '../../services/exchangeFlow';
 
 const initialState: ExchangeState = {
     originValue: '',
-    originCurrency: '',
+    originCurrency: 'GBP',
     destinationValue: '',
-    destinationCurrency: ''
+    destinationCurrency: 'USD'
 };
 
 export const useExchangeState = () => {
     const [state, dispatch] = useReducer(exchangeReducer, initialState);
 
     const onInputChange = useCallback(
-        (flow: ExchangeFlow) => (value: string, currency: string) => {
-            dispatch(inputChange(value, currency, flow));
+        (flow: ExchangeFlow) => (value: string, fromCurrency: string, toCurrency: string) => {
+            dispatch(inputChange(value, fromCurrency, toCurrency, flow));
         },
         []
     );

@@ -25,7 +25,7 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets }) => {
                 initialPocket={0}
                 sign={'-'}
                 inputValue={state.originValue}
-                inputCurrency={state.originCurrency}
+                toCurrency={state.destinationCurrency}
                 onSlideChange={onSlideChange(ExchangeFlow.FORWARD)}
                 onInputChange={onInputChange(ExchangeFlow.FORWARD)}
             />
@@ -38,8 +38,8 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets }) => {
                 initialPocket={1}
                 sign={'+'}
                 inputValue={state.destinationValue}
-                inputCurrency={state.destinationCurrency}
-                onSlideChange={onSlideChange(ExchangeFlow.FORWARD)}
+                toCurrency={state.originCurrency}
+                onSlideChange={onSlideChange(ExchangeFlow.BACKWARD)}
                 onInputChange={onInputChange(ExchangeFlow.BACKWARD)}
             />
 
