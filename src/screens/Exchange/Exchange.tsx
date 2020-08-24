@@ -3,25 +3,31 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getPockets } from '../../store/pockets/selectors';
 import { State, Pockets } from '../../store/types';
-import { CurrencyInput } from './components/CurrencyInput';
+import { CurrencyCard } from './components/CurrencyCard';
+import { ExchangeContainer } from './style';
+import { CurrencyCarousel } from './components/CurrencyCarousel';
 
-export const Exchange: React.FC = () => {
+interface ExchangeProps {
+    pockets: Pockets;
+}
+
+const Exchange: React.FC<ExchangeProps> = ({ pockets }) => {
+    // todo: on componen mount start rates fetching
     return (
-        <div>
+        <ExchangeContainer>
             <h3>Exchange screen</h3>
 
-            <div>TODO: slider with currencies here</div>
-
-            <CurrencyInput value={'123.23'} sign={'-'} focused />
+            <CurrencyCarousel pockets={pockets} initialPocket={0} sign={'-'} />
 
             <br />
+            <br />
 
-            <CurrencyInput value={'34.23'} sign={'+'} />
+            <CurrencyCarousel pockets={pockets} initialPocket={1} sign={'+'} />
 
             <br />
 
             <Link to='/'>Cancel</Link>
-        </div>
+        </ExchangeContainer>
     );
 };
 

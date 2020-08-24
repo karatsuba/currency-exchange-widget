@@ -1,9 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Input } from './style';
+import { CurrencyInputContainer, Input } from './style';
 
 interface CurrencyInputProps {
     value: string;
-    focused?: boolean; // todo: do I need to autofocus
     sign: string;
 }
 
@@ -31,16 +30,8 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = (props) => {
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // const value = ;
         setValue(valueWithSign(valueWithoutSign(event.target.value), props.sign));
     };
-
-    // todo: use separate hook
-    // useEffect(() => {
-    //     if (props.focused) {
-    //         inputElement.current?.focus();
-    //     }
-    // }, []);
 
     useEffect(() => {
         console.log('VALUE CHANGED', value);
@@ -48,13 +39,14 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = (props) => {
     }, [value]);
 
     return (
-        <Input
-            type='text'
-            value={value}
-            ref={inputElement}
-            onChange={handleChange}
-            onKeyPress={handleKeyPress}
-            autoFocus={props.focused}
-        />
+        <CurrencyInputContainer>
+            <Input
+                type='text'
+                value={value}
+                ref={inputElement}
+                onChange={handleChange}
+                onKeyPress={handleKeyPress}
+            />
+        </CurrencyInputContainer>
     );
 };

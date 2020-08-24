@@ -1,1 +1,1 @@
-export { Exchange } from './Exchange';
+export { default } from './Exchange';
