@@ -1,9 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { CurrencyInputContainer, Input } from './style';
 
 interface CurrencyInputProps {
     value: string;
+    label: string;
     sign: string;
+    inputCurrency: string;
+    onInputChange: (value: string, currency: string) => void;
 }
 
 function valueWithoutSign(value: string) {
@@ -17,9 +20,8 @@ function valueWithSign(value: string, sign: string) {
     return `${sign}${value}`;
 }
 
-export const CurrencyInput: React.FC<CurrencyInputProps> = (props) => {
+export const CurrencyInput: React.FC<CurrencyInputProps> = React.memo((props) => {
     const inputElement = useRef<HTMLInputElement>(null);
-    const [value, setValue] = useState(valueWithSign(props.value, props.sign));
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         const regex = /^[0-9]+(\.([0-9]{1,2})?)?$/;
@@ -30,13 +32,15 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = (props) => {
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(valueWithSign(valueWithoutSign(event.target.value), props.sign));
+        const nextValue = valueWithoutSign(event.target.value);
+        if (nextValue !== props.value) {
+            props.onInputChange(nextValue, props.label);
+        }
     };
 
-    useEffect(() => {
-        console.log('VALUE CHANGED', value);
-        // DISPATCH VALUE CHANGE TO LOCAL REDUCER
-    }, [value]);
+    console.log('Render CurrencyInput');
+
+    const value = valueWithSign(props.value, props.sign);
 
     return (
         <CurrencyInputContainer>
@@ -49,4 +53,4 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = (props) => {
             />
         </CurrencyInputContainer>
     );
-};
+});

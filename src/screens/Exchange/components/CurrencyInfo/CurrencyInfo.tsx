@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import { CurrencyInfoContainer, CurrencyInfoBody, CurrencyInfoFooter } from './style';
 
 interface CurrencyInfoProps {
@@ -7,11 +7,13 @@ interface CurrencyInfoProps {
     balance: number;
 }
 
-export const CurrencyInfo: React.FC<CurrencyInfoProps> = ({ label, symbol, balance }) => {
-    return (
-        <CurrencyInfoContainer>
-            <CurrencyInfoBody>{label}</CurrencyInfoBody>
-            <CurrencyInfoFooter>{`You have ${symbol}${balance}`}</CurrencyInfoFooter>
-        </CurrencyInfoContainer>
-    );
-};
+export const CurrencyInfo: React.FC<CurrencyInfoProps> = React.memo(
+    ({ label, symbol, balance }) => {
+        return (
+            <CurrencyInfoContainer>
+                <CurrencyInfoBody>{label}</CurrencyInfoBody>
+                <CurrencyInfoFooter>{`You have ${symbol}${balance}`}</CurrencyInfoFooter>
+            </CurrencyInfoContainer>
+        );
+    }
+);
