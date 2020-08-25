@@ -20,15 +20,18 @@ function valueWithSign(value: string, sign: string) {
     return `${sign}${value}`;
 }
 
-export const CurrencyInput: React.FC<CurrencyInputProps> = React.memo((props) => {
+const CurrencyInput: React.FC<CurrencyInputProps> = (props: CurrencyInputProps) => {
     const inputElement = useRef<HTMLInputElement>(null);
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         // const regex = /^[0-9]+(\.([0-9]{1,2})?)?$/;   --- allow 000.00
         const regex = /^(0|[1-9]\d*)(\.([0-9]{1,2})?)?$/;
-        const nextValue = valueWithoutSign(inputElement.current?.value!) + event.key;
-        if (!regex.test(nextValue)) {
-            event.preventDefault();
+
+        if (inputElement.current) {
+            const nextValue = valueWithoutSign(inputElement.current.value) + event.key;
+            if (!regex.test(nextValue)) {
+                event.preventDefault();
+            }
         }
     };
 
@@ -37,19 +40,15 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = React.memo((props) =>
         props.onInputChange(nextValue, props.fromCurrency, props.toCurrency);
     };
 
-    console.log('Render CurrencyInput');
+    // console.log('Render CurrencyInput');
 
     const value = valueWithSign(props.value, props.sign);
 
     return (
         <CurrencyInputContainer>
-            <Input
-                type='text'
-                value={value}
-                ref={inputElement}
-                onChange={handleChange}
-                onKeyPress={handleKeyPress}
-            />
+            <Input type='text' value={value} ref={inputElement} onChange={handleChange} onKeyPress={handleKeyPress} />
         </CurrencyInputContainer>
     );
-});
+};
+
+export default React.memo(CurrencyInput);

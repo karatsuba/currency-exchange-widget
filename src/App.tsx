@@ -5,9 +5,8 @@ import Exchange from './screens/Exchange';
 import { Container } from './components/Container';
 import { Provider } from 'react-redux';
 import { configureStore } from './store';
-import { initialState } from './store/initialState';
 
-const store = configureStore(initialState);
+const store = configureStore();
 
 export const App = () => (
     <Provider store={store}>

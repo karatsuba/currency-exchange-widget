@@ -2,24 +2,22 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import { pocketsReducer } from './pockets/reducer';
-import { State } from './types';
-// import rootSaga from './sagas';
+import { rootSaga } from './rootSaga';
+import { exchangeRatesReducer } from './rates/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
-    pockets: pocketsReducer
+    pockets: pocketsReducer,
+    exchangeRates: exchangeRatesReducer
 });
 
-export const configureStore = (initialState: State) => {
+export const configureStore = () => {
     const middlewares = [sagaMiddleware];
 
-    const store = createStore(
-        rootReducer,
-        initialState,
-        composeWithDevTools(applyMiddleware(...middlewares))
-    );
-    // sagaMiddleware.run(rootSaga);
+    const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(...middlewares)));
+
+    sagaMiddleware.run(rootSaga);
 
     return store;
 };

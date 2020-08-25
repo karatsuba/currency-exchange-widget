@@ -1,1 +1,1 @@
-export { CurrencyCard } from './CurrencyCard';
+export { default } from './CurrencyCard';

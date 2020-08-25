@@ -1,20 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getPockets } from '../../store/pockets/selectors';
-import { State, Pockets } from '../../store/types';
+import { getRates } from '../../store/rates/selectors';
+import { State, Pockets, Rates } from '../../store/types';
 import { ExchangeContainer } from './style';
-import { CurrencyCarousel } from './components/CurrencyCarousel';
+import CurrencyCarousel from './components/CurrencyCarousel';
 import { useExchangeState } from './hooks/useExchangeState';
-import { ExchangeFlow } from './services/exchangeFlow';
 
 interface ExchangeProps {
     pockets: Pockets;
+    rates: Rates;
 }
 
-const Exchange: React.FC<ExchangeProps> = ({ pockets }) => {
-    // todo: on componen mount start rates fetching
-    const { state, onInputChange, onSlideChange } = useExchangeState();
+const Exchange: React.FC<ExchangeProps> = ({ pockets, rates }: ExchangeProps) => {
+    const {
+        state,
+        onInputChangeForward,
+        onInputChangeBackward,
+        onSlideChangeForward,
+        onSlideChangeBackward,
+        onRatesChange
+    } = useExchangeState();
+
+    useEffect(() => {
+        onRatesChange(rates);
+    }, [rates, onRatesChange]);
+
+    console.log(state);
 
     return (
         <ExchangeContainer>
@@ -26,8 +39,8 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets }) => {
                 sign={'-'}
                 inputValue={state.originValue}
                 toCurrency={state.destinationCurrency}
-                onSlideChange={onSlideChange(ExchangeFlow.FORWARD)}
-                onInputChange={onInputChange(ExchangeFlow.FORWARD)}
+                onSlideChange={onSlideChangeForward}
+                onInputChange={onInputChangeForward}
             />
 
             <br />
@@ -39,8 +52,8 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets }) => {
                 sign={'+'}
                 inputValue={state.destinationValue}
                 toCurrency={state.originCurrency}
-                onSlideChange={onSlideChange(ExchangeFlow.BACKWARD)}
-                onInputChange={onInputChange(ExchangeFlow.BACKWARD)}
+                onSlideChange={onSlideChangeBackward}
+                onInputChange={onInputChangeBackward}
             />
 
             <br />
@@ -50,8 +63,11 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets }) => {
     );
 };
 
-const mapStateToProps = (state: State) => ({
-    pockets: getPockets(state)
-});
+const mapStateToProps = (state: State) => {
+    return {
+        pockets: getPockets(state),
+        rates: getRates(state)
+    };
+};
 
 export default connect(mapStateToProps, {})(Exchange);

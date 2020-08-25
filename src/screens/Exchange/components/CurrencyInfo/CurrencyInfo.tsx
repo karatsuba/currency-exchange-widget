@@ -7,13 +7,13 @@ interface CurrencyInfoProps {
     balance: number;
 }
 
-export const CurrencyInfo: React.FC<CurrencyInfoProps> = React.memo(
-    ({ currency, symbol, balance }) => {
-        return (
-            <CurrencyInfoContainer>
-                <CurrencyInfoBody>{currency}</CurrencyInfoBody>
-                <CurrencyInfoFooter>{`You have ${symbol}${balance}`}</CurrencyInfoFooter>
-            </CurrencyInfoContainer>
-        );
-    }
-);
+const CurrencyInfo: React.FC<CurrencyInfoProps> = ({ currency, symbol, balance }: CurrencyInfoProps) => {
+    return (
+        <CurrencyInfoContainer>
+            <CurrencyInfoBody>{currency}</CurrencyInfoBody>
+            <CurrencyInfoFooter>{`You have ${symbol}${balance}`}</CurrencyInfoFooter>
+        </CurrencyInfoContainer>
+    );
+};
+
+export default React.memo(CurrencyInfo);

@@ -5,4 +5,5 @@ export const CurrencyCardContainer = styled.div`
     padding: 25px;
     align-items: baseline;
     border: 1px solid grey;
+    cursor: move;
 `;

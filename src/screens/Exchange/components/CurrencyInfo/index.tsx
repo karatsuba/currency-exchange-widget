@@ -1,1 +1,1 @@
-export { CurrencyInfo } from './CurrencyInfo';
+export { default } from './CurrencyInfo';

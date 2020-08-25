@@ -1,36 +1,47 @@
 import { useReducer, useCallback } from 'react';
 import { ExchangeState } from './types';
 import { exchangeReducer } from './reducer';
-import { inputChange, slideChange } from './actions';
+import { inputChange, slideChange, ratesChange } from './actions';
 import { ExchangeFlow } from '../../services/exchangeFlow';
+import { Rates } from '../../../../store/types';
 
 const initialState: ExchangeState = {
     originValue: '',
     originCurrency: 'GBP',
     destinationValue: '',
-    destinationCurrency: 'USD'
+    destinationCurrency: 'USD',
+    rates: {}
 };
 
 export const useExchangeState = () => {
     const [state, dispatch] = useReducer(exchangeReducer, initialState);
 
-    const onInputChange = useCallback(
-        (flow: ExchangeFlow) => (value: string, fromCurrency: string, toCurrency: string) => {
-            dispatch(inputChange(value, fromCurrency, toCurrency, flow));
-        },
-        []
-    );
+    const onRatesChange = useCallback((rates: Rates) => {
+        dispatch(ratesChange(rates));
+    }, []);
 
-    const onSlideChange = useCallback(
-        (flow: ExchangeFlow) => (currency: string) => {
-            dispatch(slideChange(currency, flow));
-        },
-        []
-    );
+    const onInputChangeForward = useCallback((value: string, fromCurrency: string, toCurrency: string) => {
+        dispatch(inputChange(value, fromCurrency, toCurrency, ExchangeFlow.FORWARD));
+    }, []);
+
+    const onInputChangeBackward = useCallback((value: string, fromCurrency: string, toCurrency: string) => {
+        dispatch(inputChange(value, fromCurrency, toCurrency, ExchangeFlow.BACKWARD));
+    }, []);
+
+    const onSlideChangeForward = useCallback((currency: string) => {
+        dispatch(slideChange(currency, ExchangeFlow.FORWARD));
+    }, []);
+
+    const onSlideChangeBackward = useCallback((currency: string) => {
+        dispatch(slideChange(currency, ExchangeFlow.BACKWARD));
+    }, []);
 
     return {
         state,
-        onInputChange,
-        onSlideChange
+        onInputChangeForward,
+        onInputChangeBackward,
+        onSlideChangeForward,
+        onSlideChangeBackward,
+        onRatesChange
     };
 };
