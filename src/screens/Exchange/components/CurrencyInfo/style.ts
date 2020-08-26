@@ -11,5 +11,6 @@ export const CurrencyInfoBody = styled.div`
 `;
 
 export const CurrencyInfoFooter = styled.div`
+    margin-top: 3px;
     font-size: 15px;
 `;

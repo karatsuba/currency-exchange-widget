@@ -5,10 +5,11 @@ import { getPockets } from '../../store/pockets/selectors';
 import { getRates } from '../../store/rates/selectors';
 import { State, Pockets, Rates } from '../../store/types';
 import { exchangeCurrency, PocketsActions } from '../../store/pockets/actions';
-import { ExchangeContainer } from './style';
+import { ExchangeContainer, ExchangeNav } from './style';
 import CurrencyCarousel from './components/CurrencyCarousel';
 import { useExchangeState } from './hooks/useExchangeState';
 import ExchangeButton from './components/ExchangeButton';
+import Button from '../../components/Button';
 
 interface StateProps {
     pockets: Pockets;
@@ -44,17 +45,20 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }:
         onRatesChange(rates);
     }, [rates, onRatesChange]);
 
+    const renderExchangeInfo = (from: string, to: string, value: string) => {
+        return `1 ${from} = ${value} ${to}`;
+    };
+
     console.log(state);
 
     return (
         <ExchangeContainer>
-            <h3>Exchange screen</h3>
-
-            <br />
-
-            <ExchangeButton disabled={!state.isExchangeValid} onExchange={handleExchange} />
-
-            <p>{`1 ${state.originCurrency} = ${state.originExchangeValue} ${state.destinationCurrency}`}</p>
+            <ExchangeNav>
+                <Link to='/'>
+                    <Button>Cancel</Button>
+                </Link>
+                <ExchangeButton disabled={!state.isExchangeValid} onExchange={handleExchange} />
+            </ExchangeNav>
 
             <br />
 
@@ -64,6 +68,11 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }:
                 sign={'-'}
                 inputValue={state.originValue}
                 toCurrency={state.destinationCurrency}
+                exchangeInfo={renderExchangeInfo(
+                    state.originCurrency,
+                    state.destinationCurrency,
+                    state.originExchangeValue
+                )}
                 onSlideChange={onSlideChangeForward}
                 onInputChange={onInputChangeForward}
             />
@@ -77,15 +86,14 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }:
                 sign={'+'}
                 inputValue={state.destinationValue}
                 toCurrency={state.originCurrency}
+                exchangeInfo={renderExchangeInfo(
+                    state.destinationCurrency,
+                    state.originCurrency,
+                    state.destinationExchangeValue
+                )}
                 onSlideChange={onSlideChangeBackward}
                 onInputChange={onInputChangeBackward}
             />
-
-            <br />
-
-            <p>{`1 ${state.destinationCurrency} = ${state.destinationExchangeValue} ${state.originCurrency}`}</p>
-
-            <Link to='/'>Cancel</Link>
         </ExchangeContainer>
     );
 };

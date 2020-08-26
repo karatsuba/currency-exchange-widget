@@ -6,6 +6,11 @@ export const CurrencyInputContainer = styled.div`
     flex: 2;
 `;
 
+export const ExchangeInfo = styled.div`
+    font-size: 15px;
+    text-align: right;
+`;
+
 export const Input = styled.input`
     width: 100%;
     font-size: 30px;

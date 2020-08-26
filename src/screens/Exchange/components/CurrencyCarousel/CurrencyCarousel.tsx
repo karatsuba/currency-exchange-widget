@@ -12,6 +12,7 @@ interface CurrencyCarouselProps {
     sign: string;
     inputValue: string;
     toCurrency: string;
+    exchangeInfo: string;
     onSlideChange: (currency: string) => void;
     onInputChange: (value: string, fromCurrency: string, toCurrency: string) => void;
 }
@@ -28,6 +29,7 @@ const CurrencyCarousel: React.FC<CurrencyCarouselProps> = (props: CurrencyCarous
                     sign={props.sign}
                     inputValue={props.inputValue}
                     fromCurrency={currency}
+                    exchangeInfo={props.exchangeInfo}
                     toCurrency={props.toCurrency}
                     onInputChange={props.onInputChange}
                 />

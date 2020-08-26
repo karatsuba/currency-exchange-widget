@@ -11,6 +11,7 @@ interface CurrencyCardProps {
     balance: number;
     sign: string;
     inputValue: string;
+    exchangeInfo: string;
     onInputChange: (value: string, fromCurrency: string, toCurrency: string) => void;
 }
 
@@ -24,6 +25,7 @@ const CurrencyCard: React.FC<CurrencyCardProps> = (props: CurrencyCardProps) => 
                 fromCurrency={props.fromCurrency}
                 sign={props.sign}
                 toCurrency={props.toCurrency}
+                exchangeInfo={props.exchangeInfo}
                 onInputChange={props.onInputChange}
             />
         </CurrencyCardContainer>

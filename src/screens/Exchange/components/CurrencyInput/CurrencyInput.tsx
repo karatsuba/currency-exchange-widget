@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
-import { CurrencyInputContainer, Input } from './style';
+import { CurrencyInputContainer, ExchangeInfo, Input } from './style';
 
 interface CurrencyInputProps {
     value: string;
     fromCurrency: string;
     sign: string;
     toCurrency: string;
+    exchangeInfo: string;
     onInputChange: (value: string, fromCurrency: string, toCurrency: string) => void;
 }
 
@@ -54,6 +55,7 @@ const CurrencyInput: React.FC<CurrencyInputProps> = (props: CurrencyInputProps) 
                 onKeyPress={handleKeyPress}
                 placeholder={'0'}
             />
+            <ExchangeInfo>{props.exchangeInfo}</ExchangeInfo>
         </CurrencyInputContainer>
     );
 };
