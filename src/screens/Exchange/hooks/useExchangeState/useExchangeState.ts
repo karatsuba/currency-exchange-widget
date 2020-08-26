@@ -8,8 +8,10 @@ import { Rates, Pockets } from '../../../../store/types';
 const initialState: ExchangeState = {
     originValue: '',
     originCurrency: 'GBP',
+    originExchangeValue: '',
     destinationValue: '',
     destinationCurrency: 'USD',
+    destinationExchangeValue: '',
     rates: {},
     pockets: {},
     isExchangeValid: false

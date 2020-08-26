@@ -54,6 +54,8 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }:
 
             <ExchangeButton disabled={!state.isExchangeValid} onExchange={handleExchange} />
 
+            <p>{`1 ${state.originCurrency} = ${state.originExchangeValue} ${state.destinationCurrency}`}</p>
+
             <br />
 
             <CurrencyCarousel
@@ -80,6 +82,8 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }:
             />
 
             <br />
+
+            <p>{`1 ${state.destinationCurrency} = ${state.destinationExchangeValue} ${state.originCurrency}`}</p>
 
             <Link to='/'>Cancel</Link>
         </ExchangeContainer>

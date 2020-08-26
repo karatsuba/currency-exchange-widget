@@ -7,7 +7,7 @@ export const convertValue = (value: string, from: string, to: string, rates: Rat
         return '';
     }
 
-    const result = convert(parseFloat(value), {
+    const result = convert(currency(value).value, {
         from,
         to,
         base: 'USD',

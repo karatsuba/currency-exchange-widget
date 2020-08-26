@@ -36,7 +36,6 @@ const CurrencyCarousel: React.FC<CurrencyCarouselProps> = (props: CurrencyCarous
     };
 
     const handleSlideChange = (index: number) => {
-        console.log(index);
         const pocket = props.pockets[index];
         props.onSlideChange(pocket.currency);
     };

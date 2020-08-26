@@ -46,7 +46,14 @@ const CurrencyInput: React.FC<CurrencyInputProps> = (props: CurrencyInputProps) 
 
     return (
         <CurrencyInputContainer>
-            <Input type='text' value={value} ref={inputElement} onChange={handleChange} onKeyPress={handleKeyPress} />
+            <Input
+                type='text'
+                value={value}
+                ref={inputElement}
+                onChange={handleChange}
+                onKeyPress={handleKeyPress}
+                placeholder={'0'}
+            />
         </CurrencyInputContainer>
     );
 };

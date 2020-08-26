@@ -4,6 +4,8 @@ export interface ExchangeState extends ExchangeInputs {
     rates: Rates;
     pockets: Pockets;
     isExchangeValid: boolean;
+    originExchangeValue: string;
+    destinationExchangeValue: string;
 }
 
 export interface ExchangeInputs {
