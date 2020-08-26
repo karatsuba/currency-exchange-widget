@@ -3,30 +3,30 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getPockets } from '../../store/pockets/selectors';
 import { State, Pockets } from '../../store/types';
+import { Pocket, PocketsContainer, ExchangeButton } from './style';
 
 interface HomeProps {
     pockets: Pockets;
 }
 
-export const Home: React.FC<HomeProps> = (props) => {
-    console.log('RENDER');
+export const Home: React.FC<HomeProps> = (props: HomeProps) => {
     const pockets = Object.entries(props.pockets).map(([id, pocket]) => {
         return (
-            <div key={pocket.id}>
-                {pocket.currency}
-                {pocket.balance}
-            </div>
+            <Pocket key={pocket.id}>
+                <span>
+                    💰 {pocket.currency} {pocket.balance}
+                </span>
+            </Pocket>
         );
     });
 
     return (
         <>
-            <h3>HOME SCREEN</h3>
+            <PocketsContainer>{pockets}</PocketsContainer>
 
-            <div>{pockets}</div>
-
-            <br />
-            <Link to='/exchange'>Exchange</Link>
+            <Link to='/exchange'>
+                <ExchangeButton>Exchange 🔄</ExchangeButton>
+            </Link>
         </>
     );
 };
