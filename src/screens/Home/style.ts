@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Button from '../../components/Button';
 
 export const PocketsContainer = styled.div`
     display: flex;
@@ -22,12 +21,4 @@ export const Pocket = styled.div`
     border-radius: 10px;
     box-shadow: 0px 0px 3px grey;
     margin: 15px;
-`;
-
-export const ExchangeButton = styled(Button)`
-    border-radius: 10px;
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-    font-size: 30px;
 `;

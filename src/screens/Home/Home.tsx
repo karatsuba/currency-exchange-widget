@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getPockets } from '../../store/pockets/selectors';
 import { State, Pockets } from '../../store/types';
-import { Pocket, PocketsContainer, ExchangeButton } from './style';
+import { Pocket, PocketsContainer } from './style';
+import PrimaryButton from '../../components/PrimaryButton';
 
 interface HomeProps {
     pockets: Pockets;
@@ -25,7 +26,7 @@ export const Home: React.FC<HomeProps> = (props: HomeProps) => {
             <PocketsContainer>{pockets}</PocketsContainer>
 
             <Link to='/exchange'>
-                <ExchangeButton>Exchange 🔄</ExchangeButton>
+                <PrimaryButton>Exchange 🔄</PrimaryButton>
             </Link>
         </>
     );

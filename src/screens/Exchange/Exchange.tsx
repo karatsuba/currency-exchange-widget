@@ -9,7 +9,9 @@ import { ExchangeContainer, ExchangeNav } from './style';
 import CurrencyCarousel from './components/CurrencyCarousel';
 import { useExchangeState } from './hooks/useExchangeState';
 import ExchangeButton from './components/ExchangeButton';
-import Button from '../../components/Button';
+import SecondaryButton from '../../components/SecondaryButton';
+import Divider from '../../components/Divider';
+import isEmpty from 'lodash/isEmpty';
 
 interface StateProps {
     pockets: Pockets;
@@ -42,7 +44,9 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }:
     }, [state, exchangeCurrency]);
 
     useEffect(() => {
-        onRatesChange(rates);
+        if (!isEmpty(rates)) {
+            onRatesChange(rates);
+        }
     }, [rates, onRatesChange]);
 
     const renderExchangeInfo = (from: string, to: string, value: string) => {
@@ -55,12 +59,10 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }:
         <ExchangeContainer>
             <ExchangeNav>
                 <Link to='/'>
-                    <Button>Cancel</Button>
+                    <SecondaryButton>Cancel ⬅️</SecondaryButton>
                 </Link>
                 <ExchangeButton disabled={!state.isExchangeValid} onExchange={handleExchange} />
             </ExchangeNav>
-
-            <br />
 
             <CurrencyCarousel
                 pockets={pockets}
@@ -77,8 +79,7 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }:
                 onInputChange={onInputChangeForward}
             />
 
-            <br />
-            <br />
+            <Divider />
 
             <CurrencyCarousel
                 pockets={pockets}

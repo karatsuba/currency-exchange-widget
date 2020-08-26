@@ -6,7 +6,11 @@ export default styled.button`
     vertical-align: middle;
     text-align: center;
     background-color: transparent;
+    cursor: pointer;
     &:focus {
         outline: none;
+    }
+    &:disabled {
+        opacity: 0.3;
     }
 `;
