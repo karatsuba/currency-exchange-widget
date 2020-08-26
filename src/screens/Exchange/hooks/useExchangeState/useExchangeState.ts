@@ -3,18 +3,20 @@ import { ExchangeState } from './types';
 import { exchangeReducer } from './reducer';
 import { inputChange, slideChange, ratesChange } from './actions';
 import { ExchangeFlow } from '../../services/exchangeFlow';
-import { Rates } from '../../../../store/types';
+import { Rates, Pockets } from '../../../../store/types';
 
 const initialState: ExchangeState = {
     originValue: '',
     originCurrency: 'GBP',
     destinationValue: '',
     destinationCurrency: 'USD',
-    rates: {}
+    rates: {},
+    pockets: {},
+    isExchangeValid: false
 };
 
-export const useExchangeState = () => {
-    const [state, dispatch] = useReducer(exchangeReducer, initialState);
+export const useExchangeState = (pockets: Pockets) => {
+    const [state, dispatch] = useReducer(exchangeReducer, { ...initialState, pockets });
 
     const onRatesChange = useCallback((rates: Rates) => {
         dispatch(ratesChange(rates));

@@ -1,14 +1,21 @@
+import { Rates } from '../../store/types';
+
 export enum TYPES {
     EXCHANGE_CURRENCY = 'EXCHANGE_CURRENCY'
 }
 
-export const exchangeCurrency = (fromPocketId: string, toPocketId: string, value: number, rate: number) => ({
+export const exchangeCurrency = (
+    originCurrency: string,
+    originValue: string,
+    destinationCurrency: string,
+    destinationValue: string
+) => ({
     type: TYPES.EXCHANGE_CURRENCY as typeof TYPES.EXCHANGE_CURRENCY,
     payload: {
-        fromPocketId,
-        toPocketId,
-        value,
-        rate
+        originCurrency,
+        originValue,
+        destinationCurrency,
+        destinationValue
     }
 });
 

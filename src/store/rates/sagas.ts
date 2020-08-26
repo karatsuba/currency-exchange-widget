@@ -5,7 +5,7 @@ import { fetchRatesRequest, fetchRatesSuccess, fetchRatesFailure } from './actio
 // TODO: remove later
 import fakeResponse from './fakeResponse.json';
 const TEN_SECONDS = 10 * 1000;
-const DEBUG_SEC = TEN_SECONDS * 100;
+// const DEBUG_SEC = TEN_SECONDS * 100;
 
 function* fetchRatesSaga() {
     yield put(fetchRatesRequest());
@@ -22,7 +22,7 @@ function* fetchRatesSaga() {
 export function* refreshRates() {
     while (true) {
         yield fetchRatesSaga();
-        // yield delay(TEN_SECONDS);
-        yield delay(DEBUG_SEC);
+        yield delay(TEN_SECONDS);
+        // yield delay(DEBUG_SEC);
     }
 }

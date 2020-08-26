@@ -1,19 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getPockets } from '../../store/pockets/selectors';
 import { getRates } from '../../store/rates/selectors';
 import { State, Pockets, Rates } from '../../store/types';
+import { exchangeCurrency, PocketsActions } from '../../store/pockets/actions';
 import { ExchangeContainer } from './style';
 import CurrencyCarousel from './components/CurrencyCarousel';
 import { useExchangeState } from './hooks/useExchangeState';
+import ExchangeButton from './components/ExchangeButton';
 
-interface ExchangeProps {
+interface StateProps {
     pockets: Pockets;
     rates: Rates;
 }
 
-const Exchange: React.FC<ExchangeProps> = ({ pockets, rates }: ExchangeProps) => {
+interface DispatchProps {
+    exchangeCurrency: (
+        originCurrency: string,
+        originValue: string,
+        destinationCurrency: string,
+        destinationValue: string
+    ) => PocketsActions;
+}
+
+type ExchangeProps = StateProps & DispatchProps;
+
+const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }: ExchangeProps) => {
     const {
         state,
         onInputChangeForward,
@@ -21,7 +34,11 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates }: ExchangeProps) =>
         onSlideChangeForward,
         onSlideChangeBackward,
         onRatesChange
-    } = useExchangeState();
+    } = useExchangeState(pockets);
+
+    const handleExchange = useCallback(() => {
+        exchangeCurrency(state.originCurrency, state.originValue, state.destinationCurrency, state.destinationValue);
+    }, [state, exchangeCurrency]);
 
     useEffect(() => {
         onRatesChange(rates);
@@ -32,6 +49,12 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates }: ExchangeProps) =>
     return (
         <ExchangeContainer>
             <h3>Exchange screen</h3>
+
+            <br />
+
+            <ExchangeButton disabled={!state.isExchangeValid} onExchange={handleExchange} />
+
+            <br />
 
             <CurrencyCarousel
                 pockets={pockets}
@@ -63,11 +86,11 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates }: ExchangeProps) =>
     );
 };
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: State): StateProps => {
     return {
         pockets: getPockets(state),
         rates: getRates(state)
     };
 };
 
-export default connect(mapStateToProps, {})(Exchange);
+export default connect(mapStateToProps, { exchangeCurrency })(Exchange);

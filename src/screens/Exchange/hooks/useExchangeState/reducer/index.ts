@@ -4,6 +4,7 @@ import { ExchangeFlow } from '../../../services/exchangeFlow';
 // import { convertValue } from './helpers/convertValue';
 import { convertWithFlow } from './helpers/convertWithFlow';
 import { updateCurrencyWithFlow } from './helpers/updateCurrencyWithFlow';
+import { isExchangeValid } from './helpers/isExchangeValid';
 
 export const exchangeReducer = (state: ExchangeState, action: ExchangeStateActions): ExchangeState => {
     console.log(action);
@@ -11,17 +12,21 @@ export const exchangeReducer = (state: ExchangeState, action: ExchangeStateActio
     switch (action.type) {
         case TYPES.INPUT_CHANGE: {
             const { value, fromCurrency, toCurrency, flow } = action.payload;
+            const converted = convertWithFlow(flow, value, fromCurrency, toCurrency, state.rates);
             return {
                 ...state,
-                ...convertWithFlow(flow, value, fromCurrency, toCurrency, state.rates)
+                ...converted,
+                isExchangeValid: isExchangeValid(state.pockets, converted.originValue, converted.originCurrency)
             };
         }
 
         case TYPES.SLIDE_CHANGE: {
             const { currency, flow } = action.payload;
+            const updated = updateCurrencyWithFlow(flow, currency, state);
             return {
                 ...state,
-                ...updateCurrencyWithFlow(flow, currency, state)
+                ...updated,
+                isExchangeValid: isExchangeValid(state.pockets, updated.originValue, updated.originCurrency)
             };
         }
 

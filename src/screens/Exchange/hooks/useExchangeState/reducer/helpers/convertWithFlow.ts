@@ -1,8 +1,15 @@
 import { Rates } from '../../../../../../store/types';
 import { convertValue } from './convertValue';
 import { ExchangeFlow } from '../../../../services/exchangeFlow';
+import { ExchangeInputs } from '../../types/index';
 
-export function convertWithFlow(flow: ExchangeFlow, value: string, from: string, to: string, rates: Rates) {
+export function convertWithFlow(
+    flow: ExchangeFlow,
+    value: string,
+    from: string,
+    to: string,
+    rates: Rates
+): ExchangeInputs {
     if (flow === ExchangeFlow.FORWARD) {
         const destinationValue = convertValue(value, from, to, rates);
         return {
