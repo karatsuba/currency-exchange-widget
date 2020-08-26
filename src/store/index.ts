@@ -7,7 +7,7 @@ import { exchangeRatesReducer } from './rates/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     pockets: pocketsReducer,
     exchangeRates: exchangeRatesReducer
 });

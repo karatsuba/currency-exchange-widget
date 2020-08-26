@@ -1,3 +1,4 @@
+import fakeRates from './fakeRates.json';
 import { Rates } from '../store/types';
 
 export interface RatesResponse {
@@ -8,11 +9,14 @@ export interface RatesResponse {
     rates: Rates;
 }
 
-const API_BASE = 'https://openexchangerates.org/api/latest.json';
+const API_BASE = 'https://openexchangerates.org/api/latest.json?app_id=';
+const RATES_URL = `${API_BASE}${process.env.REACT_APP_EXCHANGE_APP_ID}`;
 
 export const fetchRates = async (): Promise<RatesResponse> => {
-    // TODO: better store app_id in .env file
-    const RATES_URL = `${API_BASE}?app_id=ae35238898fe461c901be3b02a5c4a67`;
+    // use real API only for production
+    if (process.env.NODE_ENV === 'development') {
+        return Promise.resolve(fakeRates);
+    }
 
     try {
         const response = await fetch(RATES_URL);
