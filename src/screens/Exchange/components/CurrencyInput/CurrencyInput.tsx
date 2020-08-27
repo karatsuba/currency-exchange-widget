@@ -33,6 +33,10 @@ const CurrencyInput: React.FC<CurrencyInputProps> = (props: CurrencyInputProps) 
         props.onInputChange(nextValue, props.fromCurrency, props.toCurrency);
     };
 
+    const handlePaste = (event: React.ClipboardEvent) => {
+        event.preventDefault();
+    };
+
     const value = utils.valueWithSign(props.value, props.sign);
 
     return (
@@ -42,6 +46,7 @@ const CurrencyInput: React.FC<CurrencyInputProps> = (props: CurrencyInputProps) 
                 aria-label='currency-input'
                 value={value}
                 ref={inputElement}
+                onPaste={handlePaste}
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
                 placeholder={'0'}
