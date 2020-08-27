@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { SmallPrimaryButton } from './style';
+import PrimaryButton from '../../../../components/PrimaryButton';
 
 interface ExchangeButtonProps {
     onExchange: () => void;
@@ -16,9 +16,9 @@ const ExchangeButton: React.FC<ExchangeButtonProps> = (props: ExchangeButtonProp
     };
 
     return (
-        <SmallPrimaryButton disabled={props.disabled} onClick={handleExchange}>
+        <PrimaryButton fontSize={'20px'} disabled={props.disabled} onClick={handleExchange}>
             Exchange 🔄
-        </SmallPrimaryButton>
+        </PrimaryButton>
     );
 };
 

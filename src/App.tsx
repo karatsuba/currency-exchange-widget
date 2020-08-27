@@ -5,6 +5,7 @@ import Exchange from './screens/Exchange';
 import { Container } from './components/Container';
 import { Provider } from 'react-redux';
 import { configureStore } from './store';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const store = configureStore();
 
@@ -12,14 +13,16 @@ export const App = () => (
     <Provider store={store}>
         <Router>
             <Container>
-                <Switch>
-                    <Route path='/exchange'>
-                        <Exchange />
-                    </Route>
-                    <Route path='/'>
-                        <Home />
-                    </Route>
-                </Switch>
+                <ErrorBoundary>
+                    <Switch>
+                        <Route path='/exchange'>
+                            <Exchange />
+                        </Route>
+                        <Route path='/'>
+                            <Home />
+                        </Route>
+                    </Switch>
+                </ErrorBoundary>
             </Container>
         </Router>
     </Provider>

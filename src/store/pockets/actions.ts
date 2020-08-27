@@ -1,5 +1,3 @@
-import { Rates } from '../../store/types';
-
 export enum TYPES {
     EXCHANGE_CURRENCY = 'EXCHANGE_CURRENCY'
 }
