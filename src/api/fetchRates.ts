@@ -20,6 +20,12 @@ export const fetchRates = async (): Promise<RatesResponse> => {
 
     try {
         const response = await fetch(RATES_URL);
+
+        if (!response.ok) {
+            // if API calls overuse happened or other api related issues, return fake rates
+            return Promise.resolve(fakeRates);
+        }
+
         const json: Promise<RatesResponse> = response.json();
         return json;
     } catch (error) {
