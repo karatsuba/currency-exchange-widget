@@ -4,6 +4,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { settings } from './settings';
 import { Pockets } from '../../../../store/types';
+import CurrencyInput from '../CurrencyInput';
+import CurrencyInfo from '../CurrencyInfo';
 import CurrencyCard from '../CurrencyCard';
 
 interface CurrencyCarouselProps {
@@ -20,19 +22,18 @@ interface CurrencyCarouselProps {
 const CurrencyCarousel: React.FC<CurrencyCarouselProps> = (props: CurrencyCarouselProps) => {
     const renderCurrencyCards = (pockets: Pockets) => {
         return Object.entries(pockets).map(([id, pocket]) => {
-            const { currency, ...rest } = pocket;
-
             return (
-                <CurrencyCard
-                    key={id}
-                    {...rest}
-                    sign={props.sign}
-                    inputValue={props.inputValue}
-                    fromCurrency={currency}
-                    exchangeInfo={props.exchangeInfo}
-                    toCurrency={props.toCurrency}
-                    onInputChange={props.onInputChange}
-                />
+                <CurrencyCard key={id}>
+                    <CurrencyInfo balance={pocket.balance} symbol={pocket.symbol} currency={pocket.currency} />
+                    <CurrencyInput
+                        value={props.inputValue}
+                        fromCurrency={pocket.currency}
+                        sign={props.sign}
+                        toCurrency={props.toCurrency}
+                        exchangeInfo={props.exchangeInfo}
+                        onInputChange={props.onInputChange}
+                    />
+                </CurrencyCard>
             );
         });
     };
@@ -42,7 +43,6 @@ const CurrencyCarousel: React.FC<CurrencyCarouselProps> = (props: CurrencyCarous
         props.onSlideChange(pocket.currency);
     };
 
-    // console.log('Render CurrencyCarousel');
     const cards = renderCurrencyCards(props.pockets);
 
     return (

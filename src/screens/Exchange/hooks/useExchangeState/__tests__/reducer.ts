@@ -52,7 +52,7 @@ it('should reduce exchange state on input backward change action', () => {
     });
 });
 
-fit('should reduce exchange state on rates change action', () => {
+it('should reduce exchange state on rates change action', () => {
     const action = ratesChange({ EUR: 0.5, GBP: 0.2, USD: 1 });
 
     const state = exchangeReducer(initialState, action);
