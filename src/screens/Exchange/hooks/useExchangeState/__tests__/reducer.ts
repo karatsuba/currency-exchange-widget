@@ -9,6 +9,7 @@ const initialState = {
     destinationValue: '10',
     destinationCurrency: 'USD',
     destinationExchangeValue: '0.76',
+    flow: ExchangeFlow.FORWARD,
     rates: { EUR: 0.846112, GBP: 0.761287, USD: 1 },
     pockets: {
         '0': { id: '0', currency: 'GBP', symbol: '£', balance: 50 },
@@ -70,7 +71,7 @@ it('should reduce exchange state on rates change action', () => {
     });
 });
 
-it('should reduce exchange state on slide forward change action', () => {
+it('should reduce exchange origin state on slide forward change action', () => {
     const action = slideChange('EUR', ExchangeFlow.FORWARD);
 
     const state = exchangeReducer(initialState, action);
@@ -87,10 +88,44 @@ it('should reduce exchange state on slide forward change action', () => {
     });
 });
 
-it('should reduce exchange state on slide backward change action', () => {
+it('should reduce exchange destination state on slide forward change action', () => {
+    const action = slideChange('EUR', ExchangeFlow.FORWARD);
+
+    const state = exchangeReducer({ ...initialState, flow: ExchangeFlow.BACKWARD }, action);
+
+    expect(state).toEqual({
+        ...state,
+        destinationCurrency: 'USD',
+        destinationExchangeValue: '0.85',
+        destinationValue: '10',
+        originCurrency: 'EUR',
+        originExchangeValue: '1.18',
+        originValue: '8.46',
+        isExchangeValid: true
+    });
+});
+
+it('should reduce exchange origin state on slide backward change action', () => {
     const action = slideChange('EUR', ExchangeFlow.BACKWARD);
 
     const state = exchangeReducer(initialState, action);
+
+    expect(state).toEqual({
+        ...state,
+        destinationCurrency: 'EUR',
+        destinationExchangeValue: '0.90',
+        destinationValue: '8.46',
+        originCurrency: 'GBP',
+        originExchangeValue: '1.11',
+        originValue: '7.61',
+        isExchangeValid: true
+    });
+});
+
+it('should reduce exchange destination state on slide backward change action', () => {
+    const action = slideChange('EUR', ExchangeFlow.BACKWARD);
+
+    const state = exchangeReducer({ ...initialState, flow: ExchangeFlow.BACKWARD }, action);
 
     expect(state).toEqual({
         ...state,

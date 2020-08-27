@@ -12,10 +12,12 @@ export const exchangeReducer = (state: ExchangeState, action: ExchangeStateActio
         case TYPES.INPUT_CHANGE: {
             const { value, fromCurrency, toCurrency, flow } = action.payload;
             const converted = convertWithFlow(flow, value, fromCurrency, toCurrency, state.rates);
+
             return {
                 ...state,
                 ...converted,
-                isExchangeValid: isExchangeValid(state.pockets, converted.originValue, converted.originCurrency)
+                flow,
+                isExchangeValid: isExchangeValid(state.pockets, converted)
             };
         }
 
@@ -25,7 +27,7 @@ export const exchangeReducer = (state: ExchangeState, action: ExchangeStateActio
             return {
                 ...state,
                 ...updated,
-                isExchangeValid: isExchangeValid(state.pockets, updated.originValue, updated.originCurrency)
+                isExchangeValid: isExchangeValid(state.pockets, updated)
             };
         }
 
@@ -37,15 +39,12 @@ export const exchangeReducer = (state: ExchangeState, action: ExchangeStateActio
                 return state;
             }
 
-            const originExchangeValue = convertValue('1', originCurrency, destinationCurrency, rates);
-            const destinationExchangeValue = convertValue('1', destinationCurrency, originCurrency, rates);
-
             return {
                 ...state,
                 ...convertWithFlow(ExchangeFlow.FORWARD, originValue, originCurrency, destinationCurrency, rates),
                 rates,
-                originExchangeValue,
-                destinationExchangeValue
+                originExchangeValue: convertValue('1', originCurrency, destinationCurrency, rates),
+                destinationExchangeValue: convertValue('1', destinationCurrency, originCurrency, rates)
             };
         }
 

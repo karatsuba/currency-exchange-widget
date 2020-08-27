@@ -16,7 +16,8 @@ export function convertWithFlow(
             destinationValue,
             destinationCurrency: to,
             originValue: value,
-            originCurrency: from
+            originCurrency: from,
+            flow
         };
     }
 
@@ -26,7 +27,8 @@ export function convertWithFlow(
             destinationValue: value,
             destinationCurrency: from,
             originValue,
-            originCurrency: to
+            originCurrency: to,
+            flow
         };
     }
 
@@ -34,6 +36,7 @@ export function convertWithFlow(
         destinationValue: '',
         destinationCurrency: from,
         originValue: '',
-        originCurrency: to
+        originCurrency: to,
+        flow
     };
 }

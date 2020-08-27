@@ -12,6 +12,7 @@ const initialState: ExchangeState = {
     destinationValue: '',
     destinationCurrency: 'USD',
     destinationExchangeValue: '',
+    flow: ExchangeFlow.FORWARD,
     rates: {},
     pockets: {},
     isExchangeValid: false
