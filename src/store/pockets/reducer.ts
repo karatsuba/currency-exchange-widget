@@ -6,7 +6,7 @@ import find from 'lodash/find';
 
 export const pocketsReducer = (state: Pockets = initialState, action: PocketsActions): Pockets => {
     switch (action.type) {
-        case TYPES.EXCHANGE_CURRENCY: {
+        case TYPES.EXCHANGE_MONEY: {
             const { originCurrency, originValue, destinationCurrency, destinationValue } = action.payload;
 
             const originPocket = find(state, { currency: originCurrency })!;

@@ -112,6 +112,6 @@ it('should dispatch exchange handle action on exchange button click', () => {
             originCurrency: 'GBP',
             originValue: '7.61'
         },
-        type: 'EXCHANGE_CURRENCY'
+        type: 'EXCHANGE_MONEY'
     });
 });

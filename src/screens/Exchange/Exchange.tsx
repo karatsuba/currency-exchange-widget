@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { getPockets } from '../../store/pockets/selectors';
 import { getRates } from '../../store/rates/selectors';
 import { State, Pockets, Rates } from '../../store/types';
-import { exchangeCurrency, PocketsActions } from '../../store/pockets/actions';
+import { exchangeMoney, PocketsActions } from '../../store/pockets/actions';
 import { ExchangeContainer, ExchangeNav } from './style';
 import CurrencyCarousel from './components/CurrencyCarousel';
 import { useExchangeState } from './hooks/useExchangeState';
@@ -19,7 +19,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    exchangeCurrency: (
+    exchangeMoney: (
         originCurrency: string,
         originValue: string,
         destinationCurrency: string,
@@ -29,7 +29,7 @@ interface DispatchProps {
 
 type ExchangeProps = StateProps & DispatchProps;
 
-const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }: ExchangeProps) => {
+const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeMoney }: ExchangeProps) => {
     const {
         state,
         onInputChangeForward,
@@ -40,8 +40,8 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }:
     } = useExchangeState(pockets);
 
     const handleExchange = useCallback(() => {
-        exchangeCurrency(state.originCurrency, state.originValue, state.destinationCurrency, state.destinationValue);
-    }, [state, exchangeCurrency]);
+        exchangeMoney(state.originCurrency, state.originValue, state.destinationCurrency, state.destinationValue);
+    }, [state, exchangeMoney]);
 
     useEffect(() => {
         if (!isEmpty(rates)) {
@@ -104,4 +104,4 @@ const mapStateToProps = (state: State): StateProps => {
     };
 };
 
-export default connect(mapStateToProps, { exchangeCurrency })(Exchange);
+export default connect(mapStateToProps, { exchangeMoney })(Exchange);

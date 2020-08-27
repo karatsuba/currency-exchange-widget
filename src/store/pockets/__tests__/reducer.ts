@@ -1,9 +1,9 @@
 import { pocketsReducer } from '../reducer';
 import { initialState } from '../initialState';
-import { exchangeCurrency } from '../actions';
+import { exchangeMoney } from '../actions';
 
-it('should reduce pocket state on exchangeCurrency action', () => {
-    const action = exchangeCurrency('USD', '100', 'GBP', '75.68');
+it('should reduce pocket state on exchangeMoney action', () => {
+    const action = exchangeMoney('USD', '100', 'GBP', '75.68');
 
     const state = pocketsReducer(initialState, action);
 

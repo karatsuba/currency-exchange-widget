@@ -13,7 +13,7 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = (props: HomeProps) => {
     const pockets = Object.entries(props.pockets).map(([id, pocket]) => {
         return (
-            <Pocket key={pocket.id}>
+            <Pocket key={id}>
                 <span>
                     💰 {pocket.currency} {pocket.balance}
                 </span>

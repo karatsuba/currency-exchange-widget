@@ -1,14 +1,14 @@
 export enum TYPES {
-    EXCHANGE_CURRENCY = 'EXCHANGE_CURRENCY'
+    EXCHANGE_MONEY = 'EXCHANGE_MONEY'
 }
 
-export const exchangeCurrency = (
+export const exchangeMoney = (
     originCurrency: string,
     originValue: string,
     destinationCurrency: string,
     destinationValue: string
 ) => ({
-    type: TYPES.EXCHANGE_CURRENCY as typeof TYPES.EXCHANGE_CURRENCY,
+    type: TYPES.EXCHANGE_MONEY as typeof TYPES.EXCHANGE_MONEY,
     payload: {
         originCurrency,
         originValue,
@@ -17,4 +17,4 @@ export const exchangeCurrency = (
     }
 });
 
-export type PocketsActions = ReturnType<typeof exchangeCurrency>;
+export type PocketsActions = ReturnType<typeof exchangeMoney>;
