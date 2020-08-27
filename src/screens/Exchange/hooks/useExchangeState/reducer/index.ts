@@ -7,8 +7,6 @@ import { updateCurrencyWithFlow } from './helpers/updateCurrencyWithFlow';
 import { isExchangeValid } from './helpers/isExchangeValid';
 
 export const exchangeReducer = (state: ExchangeState, action: ExchangeStateActions): ExchangeState => {
-    console.log(action);
-
     switch (action.type) {
         case TYPES.INPUT_CHANGE: {
             const { value, fromCurrency, toCurrency, flow } = action.payload;

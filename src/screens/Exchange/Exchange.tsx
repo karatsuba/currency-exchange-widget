@@ -53,8 +53,6 @@ const Exchange: React.FC<ExchangeProps> = ({ pockets, rates, exchangeCurrency }:
         return `1 ${from} = ${value} ${to}`;
     };
 
-    console.log(state);
-
     return (
         <ExchangeContainer>
             <ExchangeNav>
