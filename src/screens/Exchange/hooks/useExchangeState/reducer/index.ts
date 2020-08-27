@@ -3,6 +3,7 @@ import { ExchangeStateActions, TYPES } from '../actions';
 import { ExchangeFlow } from '../../../services/exchangeFlow';
 import { convertValue } from './helpers/convertValue';
 import { convertWithFlow } from './helpers/convertWithFlow';
+import { areRatesEqual } from './helpers/areRatesEqual';
 import { updateCurrencyWithFlow } from './helpers/updateCurrencyWithFlow';
 import { isExchangeValid } from './helpers/isExchangeValid';
 
@@ -31,8 +32,14 @@ export const exchangeReducer = (state: ExchangeState, action: ExchangeStateActio
         case TYPES.RATES_CHANGE: {
             const { rates } = action.payload;
             const { originValue, originCurrency, destinationCurrency } = state;
+
+            if (areRatesEqual(state, rates)) {
+                return state;
+            }
+
             const originExchangeValue = convertValue('1', originCurrency, destinationCurrency, rates);
             const destinationExchangeValue = convertValue('1', destinationCurrency, originCurrency, rates);
+
             return {
                 ...state,
                 ...convertWithFlow(ExchangeFlow.FORWARD, originValue, originCurrency, destinationCurrency, rates),

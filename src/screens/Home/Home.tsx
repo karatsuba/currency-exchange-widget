@@ -26,7 +26,7 @@ export const Home: React.FC<HomeProps> = (props: HomeProps) => {
             <PocketsContainer>{pockets}</PocketsContainer>
 
             <Link to='/exchange'>
-                <PrimaryButton>Exchange 🔄</PrimaryButton>
+                <PrimaryButton>Go to exchange 🔄</PrimaryButton>
             </Link>
         </>
     );
