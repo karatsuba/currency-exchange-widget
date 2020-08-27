@@ -3,34 +3,39 @@ import { render, fireEvent } from '@testing-library/react';
 import ExchangeButton from '../index';
 import { Router } from 'react-router-dom';
 
-it('should render exchange btn', () => {
+const setup = (disabled: boolean) => {
     const onExchange = jest.fn();
-    const { getByText } = render(<ExchangeButton disabled={false} onExchange={onExchange} />);
+    const historyMock = { push: jest.fn(), location: {}, listen: jest.fn() };
 
-    const btn = getByText(/Exchange 🔄/i);
+    const utils = render(
+        <Router history={historyMock as any}>
+            <ExchangeButton disabled={disabled} onExchange={onExchange} />
+        </Router>
+    );
+
+    const btn = utils.getByText(/Exchange 🔄/i);
+    return {
+        btn,
+        onExchange,
+        historyMock,
+        ...utils
+    };
+};
+
+it('should render exchange btn', () => {
+    const { btn } = setup(false);
+
     expect(btn).toBeInTheDocument();
     expect(btn).toBeEnabled();
 });
 
 it('should render disabled exchange btn', () => {
-    const onExchange = jest.fn();
-    const { getByText } = render(<ExchangeButton disabled={true} onExchange={onExchange} />);
-
-    const btn = getByText(/Exchange 🔄/i);
+    const { btn } = setup(true);
     expect(btn).toBeDisabled();
 });
 
 it('should render exchange btn and handle click and redirect to HOME screen', () => {
-    const historyMock = { push: jest.fn(), location: {}, listen: jest.fn() };
-    const onExchange = jest.fn();
-
-    const { getByText } = render(
-        <Router history={historyMock as any}>
-            <ExchangeButton disabled={false} onExchange={onExchange} />
-        </Router>
-    );
-
-    const btn = getByText(/Exchange 🔄/i);
+    const { btn, onExchange, historyMock } = setup(false);
 
     fireEvent.click(btn);
 
