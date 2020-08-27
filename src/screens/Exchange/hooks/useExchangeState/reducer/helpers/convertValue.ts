@@ -3,7 +3,7 @@ import currency from 'currency.js';
 import { Rates } from '../../../../../../store/types';
 
 export const convertValue = (value: string, from: string, to: string, rates: Rates) => {
-    if (value === '') {
+    if (value === '' || value === '.') {
         return '';
     }
 
