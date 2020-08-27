@@ -25,7 +25,7 @@ const CurrencyInput: React.FC<CurrencyInputProps> = (props: CurrencyInputProps) 
     const inputElement = useRef<HTMLInputElement>(null);
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        // const regex = /^[0-9]+(\.([0-9]{1,2})?)?$/;   --- allow 000.00
+        // handle [digit][dot][two digit]
         const regex = /^(0|[1-9]\d*)(\.([0-9]{1,2})?)?$/;
 
         if (inputElement.current) {
@@ -41,14 +41,13 @@ const CurrencyInput: React.FC<CurrencyInputProps> = (props: CurrencyInputProps) 
         props.onInputChange(nextValue, props.fromCurrency, props.toCurrency);
     };
 
-    // console.log('Render CurrencyInput');
-
     const value = valueWithSign(props.value, props.sign);
 
     return (
         <CurrencyInputContainer>
             <Input
                 type='text'
+                aria-label='currency-input'
                 value={value}
                 ref={inputElement}
                 onChange={handleChange}
